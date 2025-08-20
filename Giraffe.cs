@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace zoo_opg
 {
-    internal class Giraffe
+    class Giraffe : Animal
     {
+        public Giraffe(string name, DateTime birthdate)
+            : base(name, "Giraffe", birthdate) { }
+
+        public override void MakeSound()
+        {
+            Console.WriteLine($"{Name} siger: Hum!");
+        }
     }
+
 }

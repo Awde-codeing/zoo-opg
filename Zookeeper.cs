@@ -8,5 +8,9 @@ namespace zoo_opg
 {
     internal class Zookeeper
     {
+        public Zookeeper() 
+        {
+
+        }
     }
 }

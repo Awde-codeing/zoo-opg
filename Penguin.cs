@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace zoo_opg
 {
-    internal class Penguin
+    class Penguin : Animal
     {
+        public Penguin(string name, DateTime birthdate)
+            : base(name, "Penguin", birthdate) { }
+
+        public override void MakeSound()
+        {
+            Console.WriteLine($"{Name} siger: Honk!");
+        }
     }
 }
