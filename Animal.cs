@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace zoo_opg
 {
-    abstract class Animal
+    public abstract class Animal
     {
         public string Name { get; set; }
         public string Species { get; set; }

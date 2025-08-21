@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace zoo_opg
 {
-    class Enclosure
+    public class Enclosure
     {
         public string Name { get; set; }
-        public int Size { get; set; } // i m²
+        public int Size { get; set; }
         private List<Animal> animals;
 
         public Enclosure(string name, int size)
@@ -18,7 +18,10 @@ namespace zoo_opg
             Size = size;
             animals = new List<Animal>();
         }
-
+        public IReadOnlyList<Animal> Animals
+        {
+            get { return animals.AsReadOnly(); }
+        }
         public void AddAnimal(Animal animal)
         {
             if (!animals.Contains(animal))
@@ -45,19 +48,18 @@ namespace zoo_opg
         }
         public void ListAnimals()
         {
+            Console.WriteLine($"Dyr i {Name}:");
             if (animals.Count == 0)
             {
-                Console.WriteLine($"Der er ingen dyr i {Name}.");
+                Console.WriteLine("Ingen dyr i buret.");
             }
             else
             {
-                Console.WriteLine($"Dyr i {Name}:");
                 foreach (var animal in animals)
                 {
-                    Console.WriteLine($"- {animal.Name} ({animal.Species})");
+                    Console.WriteLine($"- {animal.Name} ({animal.Species}), {animal.GetAge()} år gammel");
                 }
             }
-
         }
     }
 }

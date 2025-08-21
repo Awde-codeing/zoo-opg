@@ -21,3 +21,4 @@ namespace zoo_opg
             Console.WriteLine($"{Name} er på jagt.");
         }
     }
+}
