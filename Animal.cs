@@ -10,16 +10,16 @@ namespace zoo_opg
     {
         public string Name { get; set; }
         public string Species { get; set; }
-        public DateTime Birthdate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public Animal(string name, string species, DateTime birthdate)
         {
             Name = name;
             Species = species;
-            Birthdate = birthdate;
+            BirthDate = birthdate;
         }
         public abstract void MakeSound();
-
+        
         public void eat()
         {
             Console.WriteLine($"{Name} is eating.");
@@ -31,8 +31,8 @@ namespace zoo_opg
         public int GetAge()
         {
             DateTime today = DateTime.Now;
-            int age = today.Year - Birthdate.Year;
-            if (Birthdate > today.AddYears(-age)) age--;
+            int age = today.Year - BirthDate.Year;
+            if (BirthDate > today.AddYears(-age)) age--;
             return age;
 
         }

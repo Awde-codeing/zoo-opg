@@ -18,9 +18,9 @@ namespace zoo_opg
             Size = size;
             animals = new List<Animal>();
         }
-        public IReadOnlyList<Animal> Animals
+        public List<Animal> GetAnimals()
         {
-            get { return animals.AsReadOnly(); }
+            return animals;
         }
         public void AddAnimal(Animal animal)
         {

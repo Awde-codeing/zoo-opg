@@ -6,15 +6,69 @@ namespace zoo_opg
     {
         static void Main(string[] args)
         {
-            Zoo myZoo = SetupZoo();
+            
+                Zoo myZoo = SetupZoo();
 
-            myZoo.ListAllAnimals();
+                ShowMenu(myZoo);
 
-            // Få dyrepasserne til at udføre deres opgaver
-            FeedAndClean(myZoo);
+                Console.WriteLine("Tryk på en tast for at afslutte...");
+                Console.ReadKey();
+            
 
-            Console.WriteLine("Tryk på en tast for at afslutte...");
-            Console.ReadKey();
+        }
+        static void ShowMenu(Zoo zoo)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Velkommen til Zoo-menuen!");
+                Console.WriteLine("Vælg et dyr for at se detaljer, eller tryk 0 for at afslutte:");
+
+                int index = 1;
+                var animals = new List<Animal>();
+
+                // List alle dyr i alle bure og gem i animals-listen
+                foreach (var enclosure in zoo.GetEnclosures())
+                {
+                    Console.WriteLine($"--- {enclosure.Name} ---");
+                    foreach (var animal in enclosure.GetAnimals())
+                    {
+                        Console.WriteLine($"{index}. {animal.Name} ({animal.GetType().Name})");
+                        animals.Add(animal);
+                        index++;
+                    }
+                }
+
+                Console.Write("\nDit valg: ");
+                string input = Console.ReadLine();
+
+                if (input == "0")
+                    break;
+
+                if (int.TryParse(input, out int choice) && choice >= 1 && choice <= animals.Count)
+                {
+                    var selectedAnimal = animals[choice - 1];
+                    ShowAnimalDetails(selectedAnimal);
+
+                    Console.WriteLine("\nTryk på en tast for at gå tilbage til menuen...");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.WriteLine("Ugyldigt valg, prøv igen.");
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+        }
+
+        static void ShowAnimalDetails(Animal animal)
+        {
+            Console.Clear();
+            Console.WriteLine("Dyr detaljer:");
+            Console.WriteLine($"Navn: {animal.Name}");
+            Console.WriteLine($"Type: {animal.GetType().Name}");
+            Console.WriteLine($"Fødselsdato: {animal.BirthDate.ToShortDateString()}");
+            // Tilføj evt. flere detaljer hvis de findes i Animal-klassen
         }
 
         // Opretter og returnerer en færdig opsat Zoo
@@ -47,36 +101,6 @@ namespace zoo_opg
             myZoo.AddEnclosure(arcticEnclosure);
 
             return myZoo;
-        }
-
-        // Metode til at få dyrepassere til at fodre og gøre rent
-        static void FeedAndClean(Zoo zoo)
-        {
-            Console.WriteLine("\nDyrepasserne går i gang med deres arbejde:\n");
-
-
-            Enclosure savannahEnclosure = null;
-            Enclosure arcticEnclosure = null;
-
-            foreach (Enclosure e in zoo.GetEnclosures())
-            {
-                if (e.Name == "Savannah") savannahEnclosure = e;
-                else if (e.Name == "Arktis") arcticEnclosure = e;
-            }
-
-            if (savannahEnclosure != null)
-            {
-                Zookeeper john = new Zookeeper("John", 30, savannahEnclosure);
-                john.FeedAnimals();
-                john.CleanEnclosure();
-            }
-
-            if (arcticEnclosure != null)
-            {
-                Zookeeper anna = new Zookeeper("Anna", 28, arcticEnclosure);
-                anna.FeedAnimals();
-                anna.CleanEnclosure();
-            }
         }
     }
 }
